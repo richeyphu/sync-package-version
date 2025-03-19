@@ -1,0 +1,40 @@
+name: "Sync Package Version"
+description: "Automatically updates the package.json version based on the latest GitHub release tag."
+author: "richeyphu"
+
+branding:
+  icon: "package"
+  color: "blue"
+
+inputs:
+  github_token:
+    description: "GitHub token with repo permissions"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Extract Release Version
+      run: |
+        TAG="${GITHUB_REF#refs/tags/}"  # Remove 'refs/tags/' prefix
+        VERSION="${TAG#v}"              # Remove 'v' prefix if present
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Update package.json
+      run: |
+        jq --arg version "$VERSION" '.version=$version' package.json > package.tmp.json
+        mv package.tmp.json package.json
+      shell: bash
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add package.json
+        git commit -m "chore: sync package.json version to $VERSION"
+        git push origin HEAD:main
+      shell: bash

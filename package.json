@@ -1,0 +1,11 @@
+{
+  "name": "sync-package-version",
+  "version": "0.0.0",
+  "description": "Automatically updates package.json to match the latest GitHub release tag.",
+  "repository": "github:richeyphu/sync-package-version",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "phuritd",
+  "license": "MIT"
+}
