@@ -7,9 +7,15 @@ branding:
   color: "blue"
 
 inputs:
-  github-token:
+  token:
     description: "GitHub token with repo permissions"
-    required: true
+    default: ${{ secrets.GITHUB_TOKEN }}
+  repository:
+    description: "Repository name"
+    default: ${{ github.repository }}
+  branch:
+    description: "Branch name"
+    default: "main"
 
 runs:
   using: "composite"
@@ -17,28 +23,25 @@ runs:
     - name: Checkout 🛎
       uses: actions/checkout@v4
 
-    - name: Extract Release Version
+    - name: Extract Release Version 🏷
       run: |
         TAG="${GITHUB_REF#refs/tags/}"  # Remove 'refs/tags/' prefix
         VERSION="${TAG#v}"              # Remove 'v' prefix if present
         echo "VERSION=$VERSION" >> $GITHUB_ENV
       shell: bash
 
-    - name: Update package.json
+    - name: Update package.json 📦
       run: |
         jq --arg version "$VERSION" '.version=$version' package.json > package.tmp.json
         mv package.tmp.json package.json
       shell: bash
 
-    - name: Get Current Branch
-      run: echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
-      shell: bash
-
-    - name: Push Changes to Current Branch
+    - name: Commit and Push 🚀
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git remote set-url origin https://x-access-token:${{ inputs.token }}@github.com/${{ inputs.repository }}
         git add package.json
         git commit -m "🔖 ci(release): bump package version to $VERSION" -m "[skip ci]"
-        git push origin HEAD:$CURRENT_BRANCH
+        git push origin HEAD:${{ inputs.branch }}
       shell: bash
