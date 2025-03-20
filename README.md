@@ -40,7 +40,7 @@ jobs:
 
 | Name           | Description                        | Required | Default |
 | -------------- | ---------------------------------- | -------- | ------- |
-| `github_token` | GitHub token with repo permissions | ✅ Yes   | N/A     |
+| `github-token` | GitHub token with repo permissions | ✅ Yes   | N/A     |
 
 ## 📜 License
 

@@ -7,14 +7,14 @@ branding:
   color: "blue"
 
 inputs:
-  github_token:
+  github-token:
     description: "GitHub token with repo permissions"
     required: true
 
 runs:
   using: "composite"
   steps:
-    - name: Checkout Repository
+    - name: Checkout 🛎
       uses: actions/checkout@v4
 
     - name: Extract Release Version
@@ -30,11 +30,15 @@ runs:
         mv package.tmp.json package.json
       shell: bash
 
-    - name: Commit and Push Changes
+    - name: Get Current Branch
+      run: echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Push Changes to Current Branch
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add package.json
         git commit -m "🔖 ci(release): bump package version to $VERSION" -m "[skip ci]"
-        git push origin HEAD:main
+        git push origin HEAD:$CURRENT_BRANCH
       shell: bash
