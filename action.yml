@@ -41,11 +41,14 @@ runs:
 
     - name: Commit and Push 🚀
       run: |
-        SKIP_CI="$([[ ${{ inputs.skip-ci }} == 'true' ]] && echo '[skip ci]')"
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git remote set-url origin https://x-access-token:${{ inputs.token }}@github.com/${{ inputs.repository }}
         git add package.json
+            SKIP_CI=""
+        if [ "${{ inputs.skip-ci }}" == "true" ]; then
+          SKIP_CI="[skip ci]"
+        fi
         git commit -m "🔖 ci(release): bump package version to $VERSION" -m "$SKIP_CI"
         git push origin HEAD:${{ inputs.branch }}
       shell: bash
