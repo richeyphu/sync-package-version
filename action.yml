@@ -3,7 +3,7 @@ description: "Automatically updates the package.json version based on the latest
 author: "richeyphu"
 
 branding:
-  icon: "package"
+  icon: "refresh-cw"
   color: "blue"
 
 inputs:
