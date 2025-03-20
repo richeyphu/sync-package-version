@@ -1,8 +1,6 @@
 name: Test Action
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
 
 env:
