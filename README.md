@@ -1,4 +1,4 @@
-# 🚀 Sync Package Version
+# 🔄 Sync Package Version
 
 Automatically updates `package.json` to match the latest GitHub release tag.
 
@@ -38,9 +38,11 @@ jobs:
 
 ## 📥 Inputs
 
-| Name           | Description                        | Required | Default |
-| -------------- | ---------------------------------- | -------- | ------- |
-| `github-token` | GitHub token with repo permissions | ✅ Yes   | N/A     |
+| Name           | Description                            | Required | Default                    |
+| -------------- | -------------------------------------- | -------- | -------------------------- |
+| `github-token` | GitHub token with repo permissions     | ✅ Yes   | N/A                        |
+| `repository`   | GitHub repository (e.g., `owner/repo`) | ❌ No    | `${{ github.repository }}` |
+| `branch`       | Branch to push changes to              | ❌ No    | `main`                     |
 
 ## 📜 License
 
