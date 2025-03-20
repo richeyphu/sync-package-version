@@ -9,7 +9,7 @@ branding:
 inputs:
   token:
     description: "GitHub token with repo permissions"
-    default: ${{ secrets.GITHUB_TOKEN }}
+    required: true
   repository:
     description: "Repository name"
     default: ${{ github.repository }}

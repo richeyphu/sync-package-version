@@ -17,12 +17,13 @@ jobs:
           git checkout -b test-action || git checkout test-action
           git pull origin test-action || echo "Branch does not exist, creating a new one."
 
-      - name: Sync package.json version
+      - name: Sync package.json version 🔄
         uses: richeyphu/sync-package-version@main
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: test-action
 
-      - name: Show updated package.json
+      - name: Show updated package.json 📦
         run: cat package.json
 
       - name: Cleanup 🧹
