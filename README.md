@@ -27,7 +27,7 @@ jobs:
       - name: Sync package.json version
         uses: richeyphu/sync-package-version@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### 🎯 What Happens?
