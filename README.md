@@ -43,6 +43,7 @@ jobs:
 | `token`      | GitHub token with repo permissions     | ✅ Yes   | N/A                        |
 | `repository` | GitHub repository (e.g., `owner/repo`) | ❌ No    | `${{ github.repository }}` |
 | `branch`     | Branch to push changes to              | ❌ No    | `main`                     |
+| `skip-ci`    | Skip CI checks for the commit          | ❌ No    | `false`                    |
 
 ## 📜 License
 
