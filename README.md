@@ -11,10 +11,12 @@ Automatically updates `package.json` to match the latest GitHub release tag.
 
 ## 🔧 Usage
 
-### 📝 Add to your workflow (`.github/workflows/release.yml`)
+### 📝 Add to your workflow
+
+Create a new workflow file (e.g., `.github/workflows/release.yml`) in your repository:
 
 ```yaml
-name: Release
+name: 🚀 Release
 
 on:
   release:
@@ -24,13 +26,13 @@ jobs:
   sync-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Sync package.json version
+      - name: Sync package.json version 🔄
         uses: richeyphu/sync-package-version@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### 🎯 What Happens?
+### 🎯 What happens?
 
 1. Extracts the **release tag** (e.g., `v1.2.3`)
 2. Updates the `package.json` **version field**
