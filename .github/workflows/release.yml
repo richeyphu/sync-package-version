@@ -1,0 +1,17 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  sync-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v4
+
+      - name: Sync package.json version 🔄
+        uses: richeyphu/sync-package-version@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
