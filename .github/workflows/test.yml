@@ -24,6 +24,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ env.TEST_BRANCH }}
+          skip-ci: true
 
       - name: Show updated package.json 📦
         run: cat package.json

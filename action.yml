@@ -16,6 +16,9 @@ inputs:
   branch:
     description: "Branch name"
     default: "main"
+  skip-ci:
+    description: "Skip CI checks for the commit"
+    default: false
 
 runs:
   using: "composite"
@@ -38,10 +41,11 @@ runs:
 
     - name: Commit and Push 🚀
       run: |
+        SKIP_CI="$([[ ${{ inputs.skip-ci }} == 'true' ]] && echo '[skip ci]')"
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git remote set-url origin https://x-access-token:${{ inputs.token }}@github.com/${{ inputs.repository }}
         git add package.json
-        git commit -m "🔖 ci(release): bump package version to $VERSION" -m "[skip ci]"
+        git commit -m "🔖 ci(release): bump package version to $VERSION" -m "$SKIP_CI"
         git push origin HEAD:${{ inputs.branch }}
       shell: bash
