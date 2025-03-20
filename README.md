@@ -27,7 +27,7 @@ jobs:
       - name: Sync package.json version
         uses: richeyphu/sync-package-version@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### 🎯 What Happens?
@@ -38,11 +38,11 @@ jobs:
 
 ## 📥 Inputs
 
-| Name           | Description                            | Required | Default                    |
-| -------------- | -------------------------------------- | -------- | -------------------------- |
-| `github-token` | GitHub token with repo permissions     | ✅ Yes   | N/A                        |
-| `repository`   | GitHub repository (e.g., `owner/repo`) | ❌ No    | `${{ github.repository }}` |
-| `branch`       | Branch to push changes to              | ❌ No    | `main`                     |
+| Name         | Description                            | Required | Default                    |
+| ------------ | -------------------------------------- | -------- | -------------------------- |
+| `token`      | GitHub token with repo permissions     | ✅ Yes   | N/A                        |
+| `repository` | GitHub repository (e.g., `owner/repo`) | ❌ No    | `${{ github.repository }}` |
+| `branch`     | Branch to push changes to              | ❌ No    | `main`                     |
 
 ## 📜 License
 
