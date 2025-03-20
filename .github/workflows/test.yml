@@ -5,6 +5,9 @@ on:
     types: [published]
   workflow_dispatch:
 
+env:
+  TEST_BRANCH: test-action
+
 jobs:
   sync-version:
     runs-on: ubuntu-latest
@@ -13,22 +16,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create and Switch to Test Branch
-        run: |
-          git checkout -b test-action || git checkout test-action
-          git pull origin test-action || echo "Branch does not exist, creating a new one."
+        run: | 
+          git checkout -b ${{ env.TEST_BRANCH }} || git checkout ${{ env.TEST_BRANCH }}
+          git reset --hard origin/main
+          git push origin ${{ env.TEST_BRANCH }} --force
 
       - name: Sync package.json version 🔄
         uses: richeyphu/sync-package-version@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: test-action
+          branch: ${{ env.TEST_BRANCH }}
 
       - name: Show updated package.json 📦
         run: cat package.json
-
-      - name: Cleanup 🧹
-        if: always()
-        run: |
-          git checkout main
-          git branch -D test-action
-          git push origin --delete test-action || echo "Branch already deleted."
