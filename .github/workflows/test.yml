@@ -1,0 +1,33 @@
+name: Test Action
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  sync-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v4
+
+      - name: Create and Switch to Test Branch
+        run: |
+          git checkout -b test-action || git checkout test-action
+          git pull origin test-action || echo "Branch does not exist, creating a new one."
+
+      - name: Sync package.json version
+        uses: richeyphu/sync-package-version@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Show updated package.json
+        run: cat package.json
+
+      - name: Cleanup 🧹
+        if: always()
+        run: |
+          git checkout main
+          git branch -D test-action
+          git push origin --delete test-action || echo "Branch already deleted."
