@@ -1,6 +1,6 @@
 {
   "name": "sync-package-version",
-  "version": "1.0.0",
+  "version": "refs/heads/main",
   "description": "Automatically updates package.json to match the latest GitHub release tag.",
   "repository": "github:richeyphu/sync-package-version",
   "scripts": {
