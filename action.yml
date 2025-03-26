@@ -19,6 +19,9 @@ inputs:
   skip-ci:
     description: "Skip CI checks for the commit"
     default: false
+  pull-request:
+    description: "Create a pull request instead of pushing directly to the branch"
+    default: false
 
 runs:
   using: "composite"
@@ -39,16 +42,37 @@ runs:
         mv package.tmp.json package.json
       shell: bash
 
-    - name: Commit and Push 🚀
+    - name: Handle Push or PR Mode 🚀
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git remote set-url origin https://x-access-token:${{ inputs.token }}@github.com/${{ inputs.repository }}
-        git add package.json
-            SKIP_CI=""
+
+        COMMIT_MESSAGE="🔖 ci(release): bump package version to $VERSION"
+        SKIP_CI=""
         if [ "${{ inputs.skip-ci }}" == "true" ]; then
           SKIP_CI="[skip ci]"
         fi
-        git commit -m "🔖 ci(release): bump package version to $VERSION" -m "$SKIP_CI"
-        git push origin HEAD:${{ inputs.branch }}
+
+        if [[ "${{ inputs.pull-request }}" == "true" ]]; then
+          BRANCH_NAME="sync-version-bump-$VERSION"
+          git checkout -b "$BRANCH_NAME"
+          git add package.json
+          git commit -m "$COMMIT_MESSAGE" -m "$SKIP_CI"
+          git push origin "$BRANCH_NAME"
+
+          gh pr create \
+            --repo "${{ inputs.repository }}" \
+            --base "${{ inputs.branch }}" \
+            --head "$BRANCH_NAME" \
+            --title "🔖 Bump package version to $VERSION" \
+            --body "This PR updates the \`package.json\` version to \`$VERSION\`."
+
+        else
+          git add package.json
+          git commit -m "$COMMIT_MESSAGE" -m "$SKIP_CI"
+          git push origin HEAD:${{ inputs.branch }}
+        fi
+      env:
+        GH_TOKEN: ${{ inputs.token }}
       shell: bash
