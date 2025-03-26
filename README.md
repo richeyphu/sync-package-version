@@ -40,12 +40,13 @@ jobs:
 
 ## 📥 Inputs
 
-| Name         | Description                            | Required | Default                    |
-| ------------ | -------------------------------------- | -------- | -------------------------- |
-| `token`      | GitHub token with repo permissions     | ✅ Yes   | N/A                        |
-| `repository` | GitHub repository (e.g., `owner/repo`) | ❌ No    | `${{ github.repository }}` |
-| `branch`     | Branch to push changes to              | ❌ No    | `main`                     |
-| `skip-ci`    | Skip CI checks for the commit          | ❌ No    | `false`                    |
+| Name           | Description                              | Required | Default                    |
+| -------------- | ---------------------------------------- | -------- | -------------------------- |
+| `token`        | GitHub token with repo permissions       | ✅ Yes   | N/A                        |
+| `repository`   | GitHub repository (e.g., `owner/repo`)   | ❌ No    | `${{ github.repository }}` |
+| `branch`       | Branch to push changes to                | ❌ No    | `main`                     |
+| `skip-ci`      | Skip CI checks for the commit            | ❌ No    | `false`                    |
+| `pull-request` | Create a pull request instead of pushing | ❌ No    | `false`                    |
 
 ## 📜 License
 
