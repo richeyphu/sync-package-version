@@ -31,8 +31,8 @@ runs:
 
     - name: Extract Release Version 🏷
       run: |
-        TAG="${GITHUB_REF#refs/tags/}"  # Remove 'refs/tags/' prefix
-        VERSION="${TAG#v}"              # Remove 'v' prefix if present
+        TAG="${GITHUB_REF#refs/*/}"  # Remove 'refs/tags/' prefix
+        VERSION="${TAG#v}"           # Remove 'v' prefix if present
         echo "VERSION=$VERSION" >> $GITHUB_ENV
       shell: bash
 
