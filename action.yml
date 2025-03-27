@@ -53,6 +53,9 @@ runs:
         if [ "${{ inputs.skip-ci }}" == "true" ]; then
           SKIP_CI="[skip ci]"
         fi
+
+        echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> $GITHUB_ENV
+        echo "SKIP_CI=$SKIP_CI" >> $GITHUB_ENV
       shell: bash
 
     - name: Commit and Push 🚀
@@ -66,7 +69,7 @@ runs:
     - name: Commit and Create PR 📝
       if: inputs.pull-request == 'true'
       run: |
-        BRANCH_NAME="sync-version-bump-${VERSION//[^a-zA-Z0-9._-]/-}"
+        BRANCH_NAME="gh-action/sync-version-bump-${VERSION//[^a-zA-Z0-9._-]/-}"
         git checkout -b "$BRANCH_NAME"
         git add package.json
         git commit -m "$COMMIT_MESSAGE" -m "$SKIP_CI"
