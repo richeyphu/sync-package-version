@@ -53,6 +53,9 @@ runs:
         if [ "${{ inputs.skip-ci }}" == "true" ]; then
           SKIP_CI="[skip ci]"
         fi
+
+        echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> $GITHUB_ENV
+        echo "SKIP_CI=$SKIP_CI" >> $GITHUB_ENV
       shell: bash
 
     - name: Commit and Push 🚀
