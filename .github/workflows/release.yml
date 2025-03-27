@@ -15,7 +15,6 @@ jobs:
         uses: richeyphu/sync-package-version@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request: true
 
       - name: Update major version tag 🔖
         if: startsWith(github.ref, 'refs/tags/v')
